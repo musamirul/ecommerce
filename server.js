@@ -9,11 +9,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI).then(()=>console.log("MongoDB connected")).catch((err)=>console.error("Mongo error: ",err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("Mongo error:", err));
 
-//Routes
-app.use('/api/auth',require("./routes/auth"));
-app.use('/api/products',require("./routes/products"));
-app.use('/api/orders',require("./routes/orders"));
+// Routes
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/products", require("./routes/products"));
+app.use("/api/orders", require("./routes/orders"));
 
-app.listen(process.env.PORT,()=>console.log("server runnning at http://localhost:${process.env.PORT}"));
+app.get("/",(req,res)=>{
+    res.send("E-Commerce backend is running");
+});
+
+app.listen(process.env.PORT, () =>
+  console.log(`🚀 Server running at http://localhost:${process.env.PORT}`)
+);
